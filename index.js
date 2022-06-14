@@ -1,14 +1,14 @@
 const express = require('express')
 const app = express()
-app.use(express.static(__dirname + '/build'))
-const API_PORT = process.env
-const port = process.env.PORT || API_PORT
+// app.use(express.static(__dirname + '/build'))
+require('dotenv').config()
+// const API_PORT = process.env
+const port = process.env.PORT
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true, limit: '50mb'}))
 app.use(bodyParser.json())
 const cors = require('cors')
 app.use(cors())
-require('dotenv').config()
 const appRouter = require('./routes/app.route')
 app.use('/', appRouter)
 
@@ -21,5 +21,7 @@ mongoose.connect(URI, (err)=>{
         console.log('Mongoose connected successfully')
     }
 })
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) =>{
+     res.send('Hello World')
+    })
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
