@@ -1,7 +1,8 @@
 const express = require('express')
 const app = express()
 app.use(express.static(__dirname + '/build'))
-const port = 9090
+const API_PORT = process.env
+const port = process.env.PORT || API_PORT
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true, limit: '50mb'}))
 app.use(bodyParser.json())
