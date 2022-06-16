@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-// app.use(express.static(__dirname + '/build'))
+app.use(express.static(__dirname + '/build'))
 require('dotenv').config()
 // const API_PORT = process.env
 const port = process.env.PORT
@@ -21,7 +21,7 @@ mongoose.connect(URI, (err)=>{
         console.log('Mongoose connected successfully')
     }
 })
-app.get('/', (req, res) =>{
-     res.send('Hello World')
+app.get('/*', (req, res) =>{
+     res.sendFile(__dirname + "/build/index.html")
     })
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

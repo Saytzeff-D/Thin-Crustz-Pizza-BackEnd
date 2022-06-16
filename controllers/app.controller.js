@@ -1,4 +1,5 @@
 const cloudinary = require('cloudinary')
+const historyModel = require('../models/history.model')
 const menuModel = require('../models/menu.model')
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -36,6 +37,18 @@ const viewMenu =(req, res)=>{
         }
     })
 }
+const checkOut =(req, res)=>{
+    let myCheckOut = req.body
+    myCheckOut.date = new Date().toLocaleTimeString()
+    const checkoutForm = new historyModel(myCheckOut)
+    checkoutForm.save((err)=>{
+        if (err) {
+            res.status(300).json({msg: 'Server Error'})
+        } else {
+            res.status(200).json({msg: 'CheckOut Added'})
+        }
+    })
+}
 
-const controller = {addMenu, viewMenu}
+const controller = {addMenu, viewMenu, checkOut}
 module.exports = controller
